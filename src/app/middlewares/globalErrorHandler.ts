@@ -3,7 +3,7 @@ import { IGenericErrorMeaagae } from '../../interface/error';
 import config from '../../config';
 import ApiError from '../../error/ApiError';
 import { handleCastError } from '../../error/handleCastError';
-import handleZodError from '../../interface/handleZodError';
+import handleZodError from '../../error/handleZodError';
 import handleValidationError from '../../error/handleValidationError';
 import { ZodError } from 'zod';
 

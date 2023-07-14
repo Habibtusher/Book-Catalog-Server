@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { ZodError, ZodIssue } from 'zod';
-import { genericErrorResponse } from './common';
-import { IGenericErrorMeaagae } from './error';
+import { genericErrorResponse } from '../interface/common';
+import { IGenericErrorMeaagae } from '../interface/error';
 
 const handleZodError = (error: ZodError): genericErrorResponse => {
   console.log('error from', error);
