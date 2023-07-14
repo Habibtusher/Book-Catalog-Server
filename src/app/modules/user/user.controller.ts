@@ -5,8 +5,16 @@ import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
 
 const logIn = catchasync(async (req: Request, res: Response) => {
- const {...loginData} = req.body
- const result = await UserService.loginUser(loginData);
+  const { ...loginData } = req.body;
+  const result = await UserService.loginUser(loginData);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Login successful.',
+    data: {
+      accessToken: result.accessToken,
+    },
+  });
 });
 const userRegister = catchasync(async (req: Request, res: Response) => {
   const { ...userData } = req.body;
