@@ -49,7 +49,7 @@ const getAllBooks = async (
   if (sortBy && sortOrder) {
     sortOpt[sortBy] = sortOrder;
   }
-  console.log(filterData);
+  console.log('filter', filterData);
   const result = await Book.find(whereCondition)
     .sort(sortOpt)
     .skip(skip)
@@ -65,8 +65,19 @@ const getAllBooks = async (
     data: result,
   };
 };
+const updateBook = async(id:string,payload:Partial<IBook>)=>{
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+    }
+  )
+  return result
+}
 export const BookService = {
   addNewBook,
   latestBooks,
   getAllBooks,
+  updateBook
 };

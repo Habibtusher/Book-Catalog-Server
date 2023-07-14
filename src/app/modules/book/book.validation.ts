@@ -13,6 +13,16 @@ const addBookZodSchema = z.object({
     }),
   }),
 });
+const editBookZodSchema = z.object({
+  body: z.object({
+    title: z.string().optional(),
+    author: z.string().optional(),
+    genre: z.string().optional(),
+    publicationDate: z.string().optional(),
+    addBy: z.string().optional(),
+  }),
+});
  export const BookValidation = {
-    addBookZodSchema
+    addBookZodSchema,
+    editBookZodSchema
  }

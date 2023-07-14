@@ -28,24 +28,33 @@ const latestBooks = catchasync(async (req: Request, res: Response) => {
   });
 });
 const allBooks = catchasync(async (req: Request, res: Response) => {
-    const pagination = pick(req.query, paginationFields);
-    const filterData = pick(req.query, booksFilters);
-    const result = await BookService.getAllBooks(
-      pagination,
-      filterData
-    );
-  
-    sendResponse<IBook[]>(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Books retrived successfully!',
-      data: result.data,
-      meta: result.meta,
-    });
+  const pagination = pick(req.query, paginationFields);
+  const filterData = pick(req.query, booksFilters);
+  const result = await BookService.getAllBooks(pagination, filterData);
+
+  sendResponse<IBook[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books retrived successfully!',
+    data: result.data,
+    meta: result.meta,
+  });
+});
+const updateBook = catchasync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { ...updateedData } = req.body;
+  const result = await BookService.updateBook(id, updateedData);
+  sendResponse<IBook>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books updated successfully!',
+    data: result,
+  });
 });
 
 export const BookController = {
   addNewBook,
   latestBooks,
-  allBooks
+  allBooks,
+  updateBook,
 };
