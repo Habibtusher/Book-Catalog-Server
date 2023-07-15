@@ -5,6 +5,8 @@ import { calculatePagination } from '../../../helper/paginationHelper';
 import { IPaginatioOpts } from '../../../interface/pagination';
 import { bookssearchFields } from './books.const';
 import { IGenericResponse } from '../../../interface/common';
+import ApiError from '../../../error/ApiError';
+import httpStatus from 'http-status';
 
 const addNewBook = async (payload: IBook): Promise<IBook> => {
   const result = await Book.create(payload);
@@ -65,19 +67,40 @@ const getAllBooks = async (
     data: result,
   };
 };
-const updateBook = async(id:string,payload:Partial<IBook>)=>{
-  const result = await Book.findOneAndUpdate(
+const updateBook = async (
+  id: string,
+  payload: Partial<IBook>
+): Promise<IBook | null> => {
+  const result = await Book.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+const getsingleBook = async (id: string): Promise<IBook | null> => {
+  const result = await Book.findById({ _id: id });
+  return result;
+};
+const deleteBook = async (id: string): Promise<IBook | null> => {
+  const existing = await Book.find({ _id: id });
+  if (!existing) {
+    throw new ApiError(httpStatus.NOT_FOUND, '');
+  }
+  const result = await Book.findByIdAndDelete({ _id: id });
+  return result;
+};
+const addReview = async (id: string, review: string) => {
+  const result = await Book.updateOne(
     { _id: id },
-    payload,
-    {
-      new: true,
-    }
-  )
-  return result
-}
+    { $push: { reviews: review } }
+  );
+  return result;
+};
 export const BookService = {
   addNewBook,
   latestBooks,
   getAllBooks,
-  updateBook
+  updateBook,
+  getsingleBook,
+  deleteBook,
+  addReview
 };

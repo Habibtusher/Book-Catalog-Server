@@ -8,6 +8,9 @@ const addBookZodSchema = z.object({
     publicationDate: z.string({
       required_error: 'Publication date is required',
     }),
+    publicationYear: z.string({
+      required_error: 'Publication year is required',
+    }),
     addBy: z.string({
       required_error: 'Add by date is required',
     }),
@@ -19,6 +22,7 @@ const editBookZodSchema = z.object({
     author: z.string().optional(),
     genre: z.string().optional(),
     publicationDate: z.string().optional(),
+    publicationYear: z.string().optional(),
     addBy: z.string().optional(),
   }),
 });

@@ -5,8 +5,10 @@ export type IBook = {
   author: string;
   genre: string;
   publicationDate: string;
+  publicationYear: string;
   reviews?: Array<string>;
   addBy: string;
+
 };
 
 export type IBooksFilters = {
