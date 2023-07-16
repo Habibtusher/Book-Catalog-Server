@@ -5,6 +5,7 @@ import { User } from './user.model';
 import config from '../../../config';
 import jwt, { Secret } from 'jsonwebtoken';
 const registerUser = async (payload: IUser): Promise<IUser> => {
+  
   const result = await User.create(payload);
   return result;
 };
@@ -22,13 +23,14 @@ const loginUser = async (payload: { email: string; password: string }) => {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Wrong password!');
   }
   const value = {
-    email: payload.password,
+    email: payload.email,
   };
   const accessToken = await jwt.sign(value, config.jwt_secret as Secret, {
     expiresIn: config.expires_in,
   });
   return {
     accessToken,
+    email:payload.email
   };
 };
 export const UserService = {

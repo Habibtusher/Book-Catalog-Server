@@ -11,13 +11,12 @@ const logIn = catchasync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Login successful.',
-    data: {
-      accessToken: result.accessToken,
-    },
+    data: result
   });
 });
 const userRegister = catchasync(async (req: Request, res: Response) => {
   const { ...userData } = req.body;
+
   const result = await UserService.registerUser(userData);
 
   sendResponse(res, {
